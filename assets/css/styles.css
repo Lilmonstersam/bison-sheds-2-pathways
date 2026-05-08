@@ -848,6 +848,24 @@ label {
   text-transform: uppercase;
 }
 
+.form-required-note {
+  margin: 0.9rem 0 1.15rem;
+  color: rgba(245, 247, 240, 0.74);
+  font-size: 0.9rem;
+}
+
+.form-required-note span,
+.field:has(:is(input, select, textarea)[required]) > label::after,
+.choice input[required] + span .choice-title::after {
+  color: var(--green);
+  font-weight: 950;
+}
+
+.field:has(:is(input, select, textarea)[required]) > label::after,
+.choice input[required] + span .choice-title::after {
+  content: " *";
+}
+
 input,
 select,
 textarea {
@@ -1039,6 +1057,14 @@ textarea {
   display: block;
   margin-bottom: 0.55rem;
   text-transform: uppercase;
+}
+
+.footer-logo {
+  display: block;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 0.9rem;
+  object-fit: contain;
 }
 
 .footer p {
