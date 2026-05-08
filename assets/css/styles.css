@@ -171,8 +171,8 @@ button.button:hover {
   font-size: 0.78rem;
 }
 
-.mobile-menu {
-  display: none;
+button.mobile-menu {
+  display: none !important;
   width: 42px;
   padding-inline: 0;
 }
@@ -1107,8 +1107,8 @@ textarea {
 }
 
 @media (max-width: 760px) {
-  .mobile-menu {
-    display: inline-flex;
+  button.mobile-menu {
+    display: inline-flex !important;
   }
 
   .nav-links {

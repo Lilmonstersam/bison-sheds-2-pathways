@@ -1,18 +1,21 @@
-const menuButton = document.querySelector("[data-menu]");
-const navLinks = document.querySelector("[data-nav]");
+const menuButtons = Array.from(document.querySelectorAll("[data-menu]"));
 
-if (menuButton && navLinks) {
+menuButtons.forEach((menuButton) => {
+  const navLinks = menuButton.closest(".site-header")?.querySelector("[data-nav]");
+  if (!navLinks) return;
+
   menuButton.addEventListener("click", () => {
     const isOpen = navLinks.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
   });
-}
+});
 
-const stickyCta = document.querySelector("[data-sticky-cta]");
-const pathwaySection = document.querySelector("[data-pathway-section]");
-const finalCta = document.querySelector("[data-final-cta]");
+const stickyCtas = Array.from(document.querySelectorAll("[data-sticky-cta]"));
 
-if (stickyCta && pathwaySection && finalCta) {
+stickyCtas.forEach((stickyCta) => {
+  const pathwaySection = document.querySelector("[data-pathway-section]");
+  const finalCta = document.querySelector("[data-final-cta]");
+  if (!pathwaySection || !finalCta) return;
   let lastY = window.scrollY;
 
   const updateStickyCta = () => {
@@ -32,7 +35,7 @@ if (stickyCta && pathwaySection && finalCta) {
   window.addEventListener("scroll", updateStickyCta, { passive: true });
   window.addEventListener("resize", updateStickyCta);
   updateStickyCta();
-}
+});
 
 const form = document.querySelector("[data-enquiry-form]");
 
@@ -76,9 +79,10 @@ if (form) {
   const updateRouteFields = () => {
     const route = getRoute();
     routeFields.forEach((group) => {
-      group.classList.toggle("active", group.dataset.routeFields === route);
+      const isActive = group.dataset.routeFields === route;
+      group.classList.toggle("active", isActive);
       group.querySelectorAll("input, select, textarea").forEach((field) => {
-        field.disabled = group.dataset.routeFields !== route;
+        field.disabled = !isActive;
       });
     });
     updateOtherSizeFields();
@@ -120,7 +124,7 @@ if (form) {
   const visibleRequiredFields = () => {
     const activeStep = steps[currentStep];
     return Array.from(activeStep.querySelectorAll("[required]")).filter((field) => {
-      return !field.disabled && field.offsetParent !== null;
+      return !field.disabled && !field.closest("[hidden]") && (field.offsetParent !== null || field.getClientRects().length > 0);
     });
   };
 
